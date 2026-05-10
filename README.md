@@ -1,26 +1,33 @@
 # Chicago Crime Patterns Explorer
 
-An interactive civic analytics dashboard for exploring reported Chicago crime patterns from 2021 through 2025. The project turns public incident data into a portfolio-ready Dash application with spatial comparison, trend analysis, day/hour behavior, arrest-rate context, and exportable filtered data.
+This is an interactive Dash dashboard I built to explore reported Chicago crime incidents from 2021 through 2025. The goal was to turn a large public dataset into something easier to scan, compare, and explain: monthly patterns, community-area differences, arrest-rate context, and day/hour reporting behavior.
 
-## Portfolio Focus
+I treated this as both a data visualization project and a UI/UX exercise. A lot of the work went into making the dashboard feel presentable for a portfolio: reducing clutter, tightening the layout, improving dark mode, making the filters behave consistently, and fitting the main charts into one screen for easier review.
 
-This project showcases my ability to build an end-to-end data visualization product: preparing public datasets, designing a usable analytics interface, implementing interactive filters, and communicating limitations clearly. The dashboard is designed for recruiters and reviewers to quickly see both technical execution and product judgment.
+## What the Dashboard Does
+
+- Shows citywide KPIs for reported incidents, arrest rate, most frequent category, and highest-volume community area.
+- Maps reported incidents by Chicago community area with selectable metrics.
+- Compares ranked crime categories while using color to show arrest-rate differences.
+- Shows monthly trends, annual outcomes, and a weekday/hour heatmap.
+- Provides focused Geospatial and Trend Analytics pages for deeper comparison.
+- Supports light/dark mode, shared filters, an analysis-window slider, and CSV export.
+
+## Why I Built It
+
+Crime data can be easy to misread when it is shown only as raw counts. I wanted this project to practice building a dashboard that is useful but careful: it highlights patterns without implying that reported incidents equal all crime, and it keeps methodology notes close to the analysis.
+
+From a portfolio perspective, this project shows how I think through the full path from data preparation to visual design. I worked on the pipeline, chart logic, layout, interaction states, and final presentation instead of only producing static charts.
 
 ## Skills Demonstrated
 
-- Data cleaning and aggregation with Python and pandas
-- Interactive dashboard development with Dash and Plotly
-- Geospatial visualization with community-area GeoJSON boundaries
-- UI/UX iteration for dense civic analytics dashboards
-- Responsive layout design, dark mode styling, and accessibility-minded controls
-- Clear communication of methodology, limitations, and data interpretation risks
-
-## Dashboard Highlights
-
-- **Overview:** KPI cards, community-area density map, ranked crime categories with arrest-rate color encoding, monthly trend, day/hour heatmap, and annual outcomes.
-- **Geospatial Explorer:** map-focused community comparison with selected-area profile, ranking, and trend panels.
-- **Trend Analytics:** monthly detail, year-over-year comparison, seasonality profile, and a shared analysis window.
-- **Usability:** searchable dropdown filters, light/dark mode, compact one-screen desktop layouts, and CSV export for the active selection.
+- Python data cleaning and aggregation with pandas
+- Dashboard development with Dash and Plotly
+- Geospatial visualization using community-area GeoJSON boundaries
+- Interactive filtering across linked charts
+- UI layout refinement for dense analytical screens
+- Dark mode and custom CSS polish
+- Public-data interpretation and methodology communication
 
 ## Tech Stack
 
@@ -58,8 +65,8 @@ src/               Data preparation script
 - Chicago Data Portal, Community Area Boundaries: https://data.cityofchicago.org/d/igwz-8jzy
 - Chicago Data Portal, ACS community-area estimates: https://data.cityofchicago.org/d/t68z-cikk
 
-## Methodology and Limitations
+## Methodology Notes
 
-The dashboard visualizes reported public-data incidents, not all crime. Counts can be affected by reporting behavior, enforcement patterns, data-entry practices, and policy changes. Per-capita estimates use available ACS community-area population estimates, so they should be interpreted as contextual approximations rather than exact risk measures.
+This dashboard uses reported public-data incidents, not a complete measure of all crime. Counts can be affected by reporting behavior, enforcement patterns, data-entry practices, and policy changes. Per-capita estimates use available ACS community-area population estimates, so they should be read as contextual estimates rather than exact risk measures.
 
-The project intentionally uses aggregated 2021-2025 data for a clear portfolio workflow: data preparation, dashboard interaction, visual comparison, and careful public-data communication.
+The dashboard currently focuses on 2021-2025 data to keep the analysis window consistent across the overview, geospatial, and trend views.
