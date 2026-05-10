@@ -1,0 +1,84 @@
+/* Loaded after the main stylesheet for Dash dropdown edge cases. */
+.theme-dropdown div[class*="-control"],
+.theme-dropdown div[class*="-menu"],
+.theme-dropdown div[class*="-MenuList"],
+.theme-dropdown div[class*="-option"] {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+.theme-dropdown div[class*="singleValue"],
+.theme-dropdown div[class*="placeholder"],
+.theme-dropdown div[class*="Input"],
+.theme-dropdown input {
+  color: var(--text) !important;
+  -webkit-text-fill-color: var(--text) !important;
+}
+
+.theme-dropdown div[class*="-option"]:hover,
+.theme-dropdown div[class*="-option"][aria-selected="true"] {
+  background: var(--active-nav-bg) !important;
+  color: var(--text) !important;
+}
+
+/* Dash 4 dropdowns use button/Radix classes. Keep these overrides dark-mode only. */
+#app-root.theme-dark .theme-dropdown.dash-dropdown {
+  background: #101c24 !important;
+  border: 1px solid #3f5966 !important;
+  color: #eff1f3 !important;
+  box-shadow: none !important;
+}
+
+#app-root.theme-dark .theme-dropdown.dash-dropdown[data-state="open"],
+#app-root.theme-dark .theme-dropdown.dash-dropdown:focus,
+#app-root.theme-dark .theme-dropdown.dash-dropdown:focus-visible {
+  border-color: #8bd5e6 !important;
+  box-shadow: 0 0 0 2px rgba(139, 213, 230, 0.22) !important;
+}
+
+#app-root.theme-dark .theme-dropdown .dash-dropdown-value,
+#app-root.theme-dark .theme-dropdown .dash-dropdown-value-item,
+#app-root.theme-dark .theme-dropdown .dash-dropdown-trigger,
+#app-root.theme-dark .theme-dropdown .dash-dropdown-trigger-icon {
+  color: #eff1f3 !important;
+  -webkit-text-fill-color: #eff1f3 !important;
+}
+
+body:has(#app-root.theme-dark) .dash-dropdown-content {
+  background: #101c24 !important;
+  border: 1px solid #3f5966 !important;
+  color: #eff1f3 !important;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34) !important;
+}
+
+body:has(#app-root.theme-dark) .dash-dropdown-search-container {
+  background: #101c24 !important;
+  color: #eff1f3 !important;
+}
+
+body:has(#app-root.theme-dark) .dash-dropdown-search {
+  color: #eff1f3 !important;
+  -webkit-text-fill-color: #eff1f3 !important;
+}
+
+body:has(#app-root.theme-dark) .dash-dropdown-search::placeholder {
+  color: #b9c7cf !important;
+  -webkit-text-fill-color: #b9c7cf !important;
+}
+
+body:has(#app-root.theme-dark) .dash-dropdown-search-icon {
+  color: #b9c7cf !important;
+}
+
+body:has(#app-root.theme-dark) .dash-dropdown-options,
+body:has(#app-root.theme-dark) .dash-dropdown-option {
+  background: #101c24 !important;
+  color: #eff1f3 !important;
+}
+
+body:has(#app-root.theme-dark) .dash-dropdown-option:hover,
+body:has(#app-root.theme-dark) .dash-dropdown-option[data-highlighted],
+body:has(#app-root.theme-dark) .dash-dropdown-option[aria-selected="true"] {
+  background: #162a36 !important;
+  color: #8bd5e6 !important;
+}

@@ -1,0 +1,156 @@
+year,primary_type,incidents,arrests,arrest_rate
+2021,Arson,530,48,9.06
+2021,Assault,20341,1830,9.0
+2021,Battery,40473,5787,14.3
+2021,Burglary,6662,312,4.68
+2021,Concealed Carry License Violation,173,167,96.53
+2021,Criminal Damage,25092,879,3.5
+2021,Criminal Sexual Assault,1541,90,5.84
+2021,Criminal Trespass,3406,997,29.27
+2021,Deceptive Practice,17954,241,1.34
+2021,Gambling,13,12,92.31
+2021,Homicide,813,297,36.53
+2021,Human Trafficking,11,2,18.18
+2021,Interference With Public Officer,314,265,84.39
+2021,Intimidation,124,4,3.23
+2021,Kidnapping,87,5,5.75
+2021,Liquor Law Violation,184,184,100.0
+2021,Motor Vehicle Theft,10603,379,3.57
+2021,Narcotics,5419,5357,98.86
+2021,Non-Criminal,4,1,25.0
+2021,Obscenity,51,36,70.59
+2021,Offense Involving Children,1982,199,10.04
+2021,Other Narcotic Violation,2,1,50.0
+2021,Other Offense,13957,1486,10.65
+2021,Prostitution,95,94,98.95
+2021,Public Indecency,4,4,100.0
+2021,Public Peace Violation,603,242,40.13
+2021,Robbery,7921,503,6.35
+2021,Sex Offense,1124,89,7.92
+2021,Stalking,370,22,5.95
+2021,Theft,40815,1553,3.8
+2021,Weapons Violation,8979,5567,62.0
+2022,Arson,422,42,9.95
+2022,Assault,20814,2010,9.66
+2022,Battery,40959,5971,14.58
+2022,Burglary,7595,370,4.87
+2022,Concealed Carry License Violation,177,170,96.05
+2022,Criminal Damage,27247,899,3.3
+2022,Criminal Sexual Assault,1613,89,5.52
+2022,Criminal Trespass,4221,1245,29.5
+2022,Deceptive Practice,17177,305,1.78
+2022,Gambling,9,8,88.89
+2022,Homicide,737,326,44.23
+2022,Human Trafficking,12,0,0.0
+2022,Interference With Public Officer,392,346,88.27
+2022,Intimidation,184,3,1.63
+2022,Kidnapping,118,11,9.32
+2022,Liquor Law Violation,203,200,98.52
+2022,Motor Vehicle Theft,21471,596,2.78
+2022,Narcotics,4757,4645,97.65
+2022,Non-Criminal,5,2,40.0
+2022,Obscenity,48,28,58.33
+2022,Offense Involving Children,1909,182,9.53
+2022,Other Narcotic Violation,7,3,42.86
+2022,Other Offense,14623,2093,14.31
+2022,Prostitution,283,280,98.94
+2022,Public Indecency,5,4,80.0
+2022,Public Peace Violation,712,301,42.28
+2022,Robbery,8966,561,6.26
+2022,Sex Offense,1243,107,8.61
+2022,Stalking,454,28,6.17
+2022,Theft,54895,2029,3.7
+2022,Weapons Violation,8781,5394,61.43
+2023,Arson,511,56,10.96
+2023,Assault,22632,2329,10.29
+2023,Battery,44255,7003,15.82
+2023,Burglary,7489,446,5.96
+2023,Concealed Carry License Violation,205,196,95.61
+2023,Criminal Damage,30091,942,3.13
+2023,Criminal Sexual Assault,1684,104,6.18
+2023,Criminal Trespass,4722,1324,28.04
+2023,Deceptive Practice,17540,749,4.27
+2023,Gambling,15,15,100.0
+2023,Homicide,638,270,42.32
+2023,Human Trafficking,11,0,0.0
+2023,Interference With Public Officer,586,512,87.37
+2023,Intimidation,237,3,1.27
+2023,Kidnapping,139,4,2.88
+2023,Liquor Law Violation,186,182,97.85
+2023,Motor Vehicle Theft,29251,788,2.69
+2023,Narcotics,5455,5323,97.58
+2023,Non-Criminal,3,0,0.0
+2023,Obscenity,42,23,54.76
+2023,Offense Involving Children,1761,183,10.39
+2023,Other Narcotic Violation,2,0,0.0
+2023,Other Offense,15728,2484,15.79
+2023,Prostitution,209,198,94.74
+2023,Public Indecency,6,5,83.33
+2023,Public Peace Violation,862,389,45.13
+2023,Robbery,11050,668,6.05
+2023,Sex Offense,1365,103,7.55
+2023,Stalking,531,35,6.59
+2023,Theft,57510,2858,4.97
+2023,Weapons Violation,8608,4993,58.0
+2024,Arson,481,44,9.15
+2024,Assault,23481,2532,10.78
+2024,Battery,46148,7902,17.12
+2024,Burglary,8431,467,5.54
+2024,Concealed Carry License Violation,196,192,97.96
+2024,Criminal Damage,28554,1107,3.88
+2024,Criminal Sexual Assault,1616,82,5.07
+2024,Criminal Trespass,4950,1431,28.91
+2024,Deceptive Practice,16318,539,3.3
+2024,Gambling,22,22,100.0
+2024,Homicide,598,234,39.13
+2024,Human Trafficking,19,0,0.0
+2024,Interference With Public Officer,691,610,88.28
+2024,Intimidation,164,7,4.27
+2024,Kidnapping,97,6,6.19
+2024,Liquor Law Violation,196,186,94.9
+2024,Motor Vehicle Theft,21707,609,2.81
+2024,Narcotics,5990,5771,96.34
+2024,Non-Criminal,3,1,33.33
+2024,Obscenity,62,29,46.77
+2024,Offense Involving Children,1692,154,9.1
+2024,Other Narcotic Violation,5,3,60.0
+2024,Other Offense,17131,3296,19.24
+2024,Prostitution,307,294,95.77
+2024,Public Indecency,9,8,88.89
+2024,Public Peace Violation,979,483,49.34
+2024,Robbery,9110,757,8.31
+2024,Sex Offense,1258,109,8.66
+2024,Stalking,516,35,6.78
+2024,Theft,60542,4127,6.82
+2024,Weapons Violation,7839,4808,61.33
+2025,Arson,374,46,12.3
+2025,Assault,21577,2688,12.46
+2025,Battery,42567,8153,19.15
+2025,Burglary,9729,479,4.92
+2025,Concealed Carry License Violation,277,270,97.47
+2025,Criminal Damage,26222,1134,4.32
+2025,Criminal Sexual Assault,1672,55,3.29
+2025,Criminal Trespass,5321,1680,31.57
+2025,Deceptive Practice,15012,450,3.0
+2025,Gambling,13,12,92.31
+2025,Homicide,431,156,36.19
+2025,Human Trafficking,13,1,7.69
+2025,Interference With Public Officer,916,841,91.81
+2025,Intimidation,144,3,2.08
+2025,Kidnapping,89,7,7.87
+2025,Liquor Law Violation,200,186,93.0
+2025,Motor Vehicle Theft,17243,585,3.39
+2025,Narcotics,7416,7031,94.81
+2025,Non-Criminal,3,3,100.0
+2025,Obscenity,55,28,50.91
+2025,Offense Involving Children,1547,115,7.43
+2025,Other Narcotic Violation,10,5,50.0
+2025,Other Offense,16801,3412,20.31
+2025,Prostitution,189,172,91.01
+2025,Public Indecency,10,10,100.0
+2025,Public Peace Violation,1055,536,50.81
+2025,Robbery,5811,564,9.71
+2025,Sex Offense,1329,114,8.58
+2025,Stalking,576,25,4.34
+2025,Theft,55131,4964,9.0
+2025,Weapons Violation,5445,4252,78.09

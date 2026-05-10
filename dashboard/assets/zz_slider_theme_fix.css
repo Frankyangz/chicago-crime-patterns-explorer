@@ -1,0 +1,111 @@
+/* Final Dash RangeSlider override: keep the sidebar Analysis Window in the dashboard palette. */
+/* Current Dash versions render RangeSlider with dash-slider/Radix classes. */
+#app-root .sidebar-range-panel .time-range-slider .dash-slider-track {
+  background: #d4e2e6 !important;
+  height: 4px !important;
+}
+
+#app-root .sidebar-range-panel .time-range-slider .dash-slider-range {
+  background: linear-gradient(90deg, #075f73, #d9912f) !important;
+  height: 4px !important;
+}
+
+#app-root .sidebar-range-panel .time-range-slider .dash-slider-thumb {
+  width: 16px !important;
+  height: 16px !important;
+  background: #ffffff !important;
+  border: 2px solid #075f73 !important;
+  box-shadow: 0 0 0 4px rgba(7, 95, 115, 0.18) !important;
+}
+
+#app-root .sidebar-range-panel .time-range-slider .dash-slider-thumb:hover,
+#app-root .sidebar-range-panel .time-range-slider .dash-slider-thumb:focus,
+#app-root .sidebar-range-panel .time-range-slider .dash-slider-thumb:focus-visible,
+#app-root .sidebar-range-panel .time-range-slider .dash-slider-thumb[data-state="active"] {
+  background: #ffffff !important;
+  border-color: #075f73 !important;
+  box-shadow: 0 0 0 5px rgba(7, 95, 115, 0.24) !important;
+}
+
+#app-root .sidebar-range-panel .time-range-slider .dash-slider-mark {
+  color: var(--muted) !important;
+}
+
+#app-root.theme-dark .sidebar-range-panel .time-range-slider .dash-slider-track {
+  background: #24434c !important;
+}
+
+#app-root.theme-dark .sidebar-range-panel .time-range-slider .dash-slider-range {
+  background: linear-gradient(90deg, #8bd5e6, #ffb960) !important;
+}
+
+#app-root.theme-dark .sidebar-range-panel .time-range-slider .dash-slider-thumb {
+  background: #111a1f !important;
+  border-color: #8bd5e6 !important;
+  box-shadow: 0 0 0 4px rgba(139, 213, 230, 0.18) !important;
+}
+
+/* Fixed colors here are intentional: they override Dash rc-slider defaults even if variables are bypassed. */
+#app-root .sidebar-range-panel .time-range-slider .rc-slider .rc-slider-rail,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider-rail,
+#app-root .sidebar-range-panel .time-range-slider.rc-slider .rc-slider-rail,
+#app-root .sidebar-range-panel .rc-slider .rc-slider-rail {
+  background: #d4e2e6 !important;
+  height: 4px !important;
+}
+
+#app-root .sidebar-range-panel .time-range-slider .rc-slider .rc-slider-track,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider-track,
+#app-root .sidebar-range-panel .time-range-slider.rc-slider .rc-slider-track,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider-tracks .rc-slider-track,
+#app-root .sidebar-range-panel .rc-slider .rc-slider-track {
+  background: linear-gradient(90deg, #075f73, #d9912f) !important;
+  border-color: transparent !important;
+  height: 4px !important;
+}
+
+#app-root .sidebar-range-panel .time-range-slider .rc-slider .rc-slider-handle,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider-handle,
+#app-root .sidebar-range-panel .time-range-slider.rc-slider .rc-slider-handle,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider-handle-1,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider-handle-2,
+#app-root .sidebar-range-panel .rc-slider .rc-slider-handle {
+  width: 16px !important;
+  height: 16px !important;
+  margin-top: -6px !important;
+  border: 2px solid #075f73 !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 4px rgba(7, 95, 115, 0.18) !important;
+  opacity: 1 !important;
+}
+
+#app-root .sidebar-range-panel .time-range-slider .rc-slider .rc-slider-handle:focus,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider .rc-slider-handle:hover,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider .rc-slider-handle-dragging,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider-handle:focus,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider-handle:hover,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider-handle-dragging,
+#app-root .sidebar-range-panel .rc-slider .rc-slider-handle:focus,
+#app-root .sidebar-range-panel .rc-slider .rc-slider-handle:hover,
+#app-root .sidebar-range-panel .rc-slider .rc-slider-handle-dragging {
+  border-color: #075f73 !important;
+  box-shadow: 0 0 0 5px rgba(7, 95, 115, 0.24) !important;
+}
+
+#app-root .sidebar-range-panel .time-range-slider .rc-slider .rc-slider-dot,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider-dot,
+#app-root .sidebar-range-panel .rc-slider .rc-slider-dot {
+  border-color: #b9ccd2 !important;
+  background: #ffffff !important;
+}
+
+#app-root .sidebar-range-panel .time-range-slider .rc-slider .rc-slider-dot-active,
+#app-root .sidebar-range-panel .time-range-slider .rc-slider-dot-active,
+#app-root .sidebar-range-panel .rc-slider .rc-slider-dot-active {
+  border-color: #d9912f !important;
+  background: #d9912f !important;
+}
+
+#app-root .sidebar-range-panel .time-range-slider .rc-slider-mark-text {
+  color: var(--muted) !important;
+}
