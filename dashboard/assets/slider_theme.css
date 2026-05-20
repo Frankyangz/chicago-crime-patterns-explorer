@@ -1,5 +1,3 @@
-/* Final Dash RangeSlider override: keep the sidebar Analysis Window in the dashboard palette. */
-/* Current Dash versions render RangeSlider with dash-slider/Radix classes. */
 #app-root .sidebar-range-panel .time-range-slider .dash-slider-track {
   background: #d4e2e6 !important;
   height: 4px !important;
