@@ -351,133 +351,10 @@ input:focus-visible,
 .footer a { color: var(--primary); font-weight: 700; }
 .footer a.pending-link { color: var(--outline); cursor: default; }
 
-/* Dash dcc.Dropdown / React Select theming */
-.filter-panel .Select,
+/* Dash dropdown positioning */
 .filter-panel .dash-dropdown,
-.topbar-filter-panel .Select,
 .topbar-filter-panel .dash-dropdown {
   position: relative;
-}
-.filter-panel .Select.is-open,
-.topbar-filter-panel .Select.is-open {
-  z-index: 10000;
-}
-.Select-control {
-  min-height: 36px !important;
-  height: 36px !important;
-  border: 1px solid var(--outline-variant) !important;
-  border-radius: 4px !important;
-  background: var(--surface) !important;
-  color: var(--text) !important;
-  box-shadow: none !important;
-  transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
-}
-.Select.is-focused > .Select-control,
-.Select.is-open > .Select-control {
-  border-color: var(--primary) !important;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 18%, transparent) !important;
-}
-.Select-placeholder,
-.Select--single > .Select-control .Select-value,
-.Select--single > .Select-control .Select-value-label,
-.Select-value-label,
-.Select-input,
-.Select-input > input {
-  color: var(--text) !important;
-  line-height: 34px !important;
-}
-.Select-placeholder {
-  color: color-mix(in srgb, var(--muted) 72%, transparent) !important;
-}
-.Select-arrow-zone {
-  color: var(--muted) !important;
-}
-.Select-arrow {
-  border-top-color: var(--muted) !important;
-}
-.Select-clear-zone {
-  color: var(--muted) !important;
-}
-.Select-menu-outer {
-  z-index: 10000 !important;
-  margin-top: 6px !important;
-  overflow: hidden !important;
-  border: 1px solid var(--outline-variant) !important;
-  border-radius: 6px !important;
-  background: var(--surface) !important;
-  color: var(--text) !important;
-  box-shadow: var(--shadow) !important;
-}
-.Select-menu,
-.Select-option,
-.Select-noresults,
-.VirtualizedSelectOption {
-  background: var(--surface) !important;
-  color: var(--text) !important;
-}
-.Select-option,
-.VirtualizedSelectOption {
-  min-height: 34px !important;
-  display: flex !important;
-  align-items: center !important;
-  padding: 8px 12px !important;
-  border-bottom: 1px solid color-mix(in srgb, var(--outline-variant) 40%, transparent);
-}
-.Select-option:last-child,
-.VirtualizedSelectOption:last-child {
-  border-bottom: 0;
-}
-.Select-option.is-focused,
-.Select-option:hover,
-.VirtualizedSelectFocusedOption {
-  background: var(--active-nav-bg) !important;
-  color: var(--text) !important;
-}
-.Select-option.is-selected,
-.VirtualizedSelectSelectedOption {
-  background: color-mix(in srgb, var(--primary) 18%, var(--surface)) !important;
-  color: var(--text) !important;
-  font-weight: 700 !important;
-}
-.Select-menu-outer input,
-.Select-input input {
-  background: transparent !important;
-  color: var(--text) !important;
-}
-.Select-menu-outer ::placeholder,
-.Select-input input::placeholder {
-  color: color-mix(in srgb, var(--muted) 70%, transparent) !important;
-}
-.Select-menu-outer ::-webkit-scrollbar {
-  width: 10px;
-}
-.Select-menu-outer ::-webkit-scrollbar-track {
-  background: var(--surface-container-low);
-}
-.Select-menu-outer ::-webkit-scrollbar-thumb {
-  background: var(--outline-variant);
-  border-radius: 999px;
-  border: 2px solid var(--surface-container-low);
-}
-.Select-menu-outer ::-webkit-scrollbar-thumb:hover {
-  background: var(--outline);
-}
-.theme-dark .Select-control,
-.theme-dark .Select-menu-outer,
-.theme-dark .Select-menu,
-.theme-dark .Select-option,
-.theme-dark .Select-noresults,
-.theme-dark .VirtualizedSelectOption {
-  background: #0e171d !important;
-}
-.theme-dark .Select-option.is-focused,
-.theme-dark .Select-option:hover,
-.theme-dark .VirtualizedSelectFocusedOption {
-  background: #162a36 !important;
-}
-.theme-dark .Select-option.is-selected,
-.theme-dark .VirtualizedSelectSelectedOption {
-  background: #00384d !important;
 }
 .theme-dark .js-plotly-plot .plotly .modebar { filter: invert(1); }
 
@@ -499,42 +376,6 @@ input:focus-visible,
   .footer div { flex-wrap: wrap; }
 }
 
-/* Dark-mode dropdown readability fixes */
-.theme-dark .Select-control,
-.theme-dark .Select.is-focused > .Select-control,
-.theme-dark .Select.is-open > .Select-control {
-  background: #101c24 !important;
-  border-color: #3f5966 !important;
-  color: #eff1f3 !important;
-}
-.theme-dark .Select-placeholder,
-.theme-dark .Select--single > .Select-control .Select-value,
-.theme-dark .Select--single > .Select-control .Select-value-label,
-.theme-dark .Select-value-label,
-.theme-dark .Select-input,
-.theme-dark .Select-input > input {
-  color: #eff1f3 !important;
-  -webkit-text-fill-color: #eff1f3 !important;
-}
-.theme-dark .Select-placeholder {
-  color: #b9c7cf !important;
-  -webkit-text-fill-color: #b9c7cf !important;
-}
-.theme-dark .Select-arrow {
-  border-top-color: #eff1f3 !important;
-}
-.theme-dark .Select-arrow-zone,
-.theme-dark .Select-clear-zone {
-  color: #eff1f3 !important;
-}
-.theme-dark .Select-menu-outer,
-.theme-dark .Select-menu,
-.theme-dark .Select-option,
-.theme-dark .Select-noresults,
-.theme-dark .VirtualizedSelectOption {
-  background: #101c24 !important;
-  color: #eff1f3 !important;
-}
 /* Geospatial Explorer */
 .nav-link {
   width: 100%;

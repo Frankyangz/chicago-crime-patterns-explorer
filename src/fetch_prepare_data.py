@@ -216,18 +216,6 @@ def prepare_kpi_summary(community_counts: pd.DataFrame) -> None:
     yearly.to_csv(DATA_PROCESSED / "kpi_summary.csv", index=False)
 
 
-def update_project_plan_boundary_id() -> None:
-    plan_path = ROOT / "project_plan.md"
-    if not plan_path.exists():
-        return
-    text = plan_path.read_text(encoding="utf-8")
-    text = text.replace("Dataset ID: `cauq-8yn6`", "Dataset ID: `igwz-8jzy`")
-    text = text.replace("https://data.cityofchicago.org/d/cauq-8yn6", "https://data.cityofchicago.org/d/igwz-8jzy")
-    text = text.replace("https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Community-Areas-current-/cauq-8yn6/about", "https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Community-Areas-current-/igwz-8jzy/about")
-    text = text.replace("https://data.cityofchicago.org/api/geospatial/cauq-8yn6?method=export&format=GeoJSON", BOUNDARIES_GEOJSON)
-    plan_path.write_text(text, encoding="utf-8")
-
-
 def main() -> None:
     ensure_dirs()
     boundaries = fetch_geojson(BOUNDARIES_GEOJSON)
@@ -241,7 +229,6 @@ def main() -> None:
     community_counts = prepare_community_counts(area_lookup, population)
     heat = prepare_heatmap(area_lookup)
     prepare_kpi_summary(community_counts)
-    update_project_plan_boundary_id()
 
     summary = {
         "monthly_rows": len(monthly),

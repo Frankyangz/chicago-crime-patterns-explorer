@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from dash import Dash, Input, Output, State, clientside_callback, ctx, dcc, html
@@ -11,7 +12,7 @@ import plotly.graph_objects as go
 ROOT = Path(__file__).resolve().parents[1]
 DATA_SHARED = ROOT / "data" / "shared"
 DATA_PROCESSED = ROOT / "data" / "processed"
-GITHUB_REPO_URL = ""  # Add the public GitHub repository URL after publishing.
+GITHUB_REPO_URL = "https://github.com/Frankyangz/chicago-crime-patterns-explorer"
 
 YEARS = [2021, 2022, 2023, 2024, 2025]
 YEAR_OPTIONS = [{"label": "All Years", "value": "all"}] + [{"label": str(year), "value": year} for year in YEARS]
@@ -1033,7 +1034,7 @@ def update_geospatial(year: int | str, crime_type: str, community_area: int, met
 def export_filtered_data(_clicks: int | None, year: int | str, crime_type: str, community_area: int):
     export = export_rows(year, crime_type, int(community_area))
     year_part = "2021-2025" if is_all_years(year) else str(year)
-    type_part = str(crime_type).lower().replace(" ", "-")
+    type_part = re.sub(r"[^a-z0-9]+", "-", str(crime_type).lower()).strip("-")
     scope_part = "all-areas" if not int(community_area) else f"area-{int(community_area)}"
     filename = f"chicago-crime-{year_part}-{type_part}-{scope_part}.csv"
     return dcc.send_data_frame(export.to_csv, filename, index=False)

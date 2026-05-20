@@ -46,7 +46,15 @@ cd dashboard
 python app.py
 ```
 
-Open `http://127.0.0.1:8050/` in your browser.
+Open `http://127.0.0.1:8050/` in your browser. The app runs locally only and is not deployed to a public server.
+
+To re-fetch and rebuild all data files from the Chicago Data Portal:
+
+```bash
+python src/fetch_prepare_data.py
+```
+
+This pulls the latest data from the portal's API and regenerates the CSV and GeoJSON files under `data/`.
 
 ## Project Structure
 
@@ -70,3 +78,10 @@ src/               Data preparation script
 This dashboard uses reported public-data incidents, not a complete measure of all crime. Counts can be affected by reporting behavior, enforcement patterns, data-entry practices, and policy changes. Per-capita estimates use available ACS community-area population estimates, so they should be read as contextual estimates rather than exact risk measures.
 
 The dashboard currently focuses on 2021-2025 data to keep the analysis window consistent across the overview, geospatial, and trend views.
+
+## Limitations
+
+- This is reported crime data, not a complete count of all crime. Unreported incidents are not captured.
+- 2025 data is still accumulating and year-over-year comparisons with 2025 should be read with that in mind.
+- Per-capita rates use ACS estimates, not a census count, so they are approximations.
+- Community-area comparisons can be misleading without context: high-traffic commercial areas may show elevated counts that reflect foot traffic rather than residential safety.
