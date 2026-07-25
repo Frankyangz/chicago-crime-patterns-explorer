@@ -8,7 +8,7 @@ An interactive Dash dashboard for exploring 1.2 million reported Chicago crime i
 
 A few findings the dashboard surfaces, and why they motivated the design:
 
-- **Reported incidents rose from 2021 to 2023, then declined through 2025** — while the arrest rate moved the other way, climbing steadily from 12.7% to 16.0%. Volume and outcomes are separate stories, so the annual chart plots both on shared axes rather than counts alone.
+- **Reported incidents rose from 2021 to 2023, then declined through 2025** — while the arrest rate moved the other way, climbing steadily from 12.7% to 16.0%. The 8.5% drop from 2024 to 2025 is a complete-year comparison, not an artifact of partial data. Volume and outcomes are separate stories, so the annual chart plots both on shared axes rather than counts alone.
 - **Austin has the highest reported volume of any community area** (61,488 incidents), ahead of Near North Side (52,817).
 - **Citywide activity peaks Friday 4-8 PM — but Austin peaks Sunday 12-4 AM.** A single citywide pattern hides that kind of variation entirely, which is the core argument for making every view filterable to one area.
 - **High-volume categories are not high-arrest categories.** Theft leads on count with a 5.8% arrest rate, while Battery sits at 16.2%. The ranked bar chart encodes count as length and arrest rate as color so both read at once.
@@ -86,7 +86,7 @@ src/               Data preparation script
 This dashboard uses reported public-data incidents, which is not a complete measure of crime. Counts reflect reporting behavior, enforcement patterns, data-entry practices, and policy changes as much as they reflect underlying activity.
 
 - Unreported incidents are not captured anywhere in this data.
-- 2025 data is still accumulating; year-over-year comparisons involving 2025 should be read with that in mind.
+- The 2021-2025 window is closed and complete. Every month through December 2025 is present, so the 2025 decline reflects reported activity rather than a partial year. 2026 is excluded to keep the window fixed.
 - Per-capita rates use ACS estimates rather than a census count, so they are approximations.
 - Community-area comparisons can mislead without context. High-traffic commercial areas can show elevated counts that reflect foot traffic rather than residential risk.
 - The analysis window is fixed to 2021-2025 so that the overview, geospatial, and trend views stay consistent with one another.

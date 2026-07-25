@@ -1,0 +1,8 @@
+# Normalize text line endings in the repository regardless of local git config,
+# so clones on other machines do not produce whole-file diffs.
+* text=auto eol=lf
+
+# Large generated assets: skip diffing and line-ending conversion.
+*.geojson binary
+*.png binary
+*.pdf binary
