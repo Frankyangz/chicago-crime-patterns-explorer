@@ -111,10 +111,9 @@ def category_color_key(values: list[float], low_color: str, high_color: str):
     return compact_color_key("Arrest rate", format_percent(low), format_percent(high), low_color, high_color)
 
 
-def heatmap_color_key(year: int | str, crime_type: str, community_area: int, low_color: str, high_color: str):
-    data = filtered_heatmap_data(year, crime_type, community_area)
-    if data.empty:
-        return []
+def heatmap_color_key(data: pd.DataFrame, low_color: str, high_color: str):
+    if data.empty or int(data["incidents"].max()) == 0:
+        return [html.Span("No reported incidents", className="color-key-title")]
     low = int(data["incidents"].min())
     high = int(data["incidents"].max())
     return compact_color_key("Incidents", format_number(low), format_number(high), low_color, high_color)
@@ -257,9 +256,7 @@ def aggregate_area_data(year: int | str, crime_type: str) -> pd.DataFrame:
     return grouped
 
 
-def selected_area_from_click(click_data: dict | None, fallback_area: int) -> int:
-    if fallback_area:
-        return int(fallback_area)
+def area_from_click(click_data: dict | None) -> int:
     if click_data and click_data.get("points"):
         location = click_data["points"][0].get("location")
         if location is not None:
@@ -313,11 +310,10 @@ def filtered_heatmap_data(year: int | str, crime_type: str, community_area: int)
     if "year" in data.columns and not is_all_years(year):
         data = data[data["year"] == int(year)]
     if "community_area" in data.columns:
-        selected_area = int(community_area) if community_area else 0
-        area_data = data[data["community_area"] == selected_area]
-        if area_data.empty and selected_area != 0:
-            area_data = data[data["community_area"] == 0]
-        data = area_data
+        # Area 0 is the citywide aggregate. A selected area with no rows for this
+        # category has no reported incidents, so it must render as an empty grid
+        # rather than silently borrowing the citywide pattern.
+        data = data[data["community_area"] == (int(community_area) if community_area else 0)]
 
     grouped = data.groupby(["day", "hour_band"], as_index=False)["incidents"].sum()
     complete = pd.MultiIndex.from_product([DAY_LABELS, [label for _, label in HOUR_BANDS]], names=["day", "hour_band"]).to_frame(index=False)
@@ -328,8 +324,7 @@ def filtered_heatmap_data(year: int | str, crime_type: str, community_area: int)
     return grouped.sort_values(["day_order", "hour_band_start"])
 
 
-def heatmap_figure(year: int | str, crime_type: str, community_area: int, theme: str) -> go.Figure:
-    data = filtered_heatmap_data(year, crime_type, community_area)
+def heatmap_figure(data: pd.DataFrame, theme: str) -> go.Figure:
     matrix = data.pivot(index="day", columns="hour_band", values="incidents").reindex(index=DAY_LABELS, columns=[label for _, label in HOUR_BANDS]).fillna(0)
     x_labels = [HOUR_BAND_LABELS[label] for label in matrix.columns]
     primary = "#075f73" if theme != "dark" else "#8bd5e6"
@@ -350,6 +345,16 @@ def heatmap_figure(year: int | str, crime_type: str, community_area: int, theme:
     fig.update_xaxes(tickfont={"size": 10}, automargin=True)
     fig.update_yaxes(tickfont={"size": 11}, automargin=True)
     fig.update_yaxes(autorange="reversed")
+    if matrix.values.sum() == 0:
+        fig.add_annotation(
+            text="No reported incidents for these filters",
+            showarrow=False,
+            xref="paper",
+            yref="paper",
+            x=0.5,
+            y=0.5,
+            font={"size": 12, "color": "#eff1f3" if theme == "dark" else "#191c1e"},
+        )
     return themed_layout(fig, theme)
 
 
@@ -384,7 +389,7 @@ def area_profile_panel(area_data: pd.DataFrame, selected_area: int, metric: str,
             html.Div([html.H3(title), html.P(detail)], className="panel-header profile-header"),
             html.P(context, className="profile-context"),
             html.Div(metrics, className="profile-stats"),
-            html.P("Tip: filter for a fixed profile, or click the map when viewing All Community Areas.", className="profile-tip"),
+            html.P("Tip: filter for a fixed profile, or click the map when viewing All Community Areas. Click the same area again to clear it.", className="profile-tip"),
         ],
     )
 
@@ -540,8 +545,9 @@ app.layout = html.Div(
     id="app-root",
     className="app-shell theme-light",
     children=[
-        dcc.Store(id="theme-store", data="light"),
+        dcc.Store(id="theme-store", data="light", storage_type="local"),
         dcc.Store(id="active-view", data="overview"),
+        dcc.Store(id="geo-selection", data=0),
         dcc.Download(id="export-download"),
         html.Aside(
             className="sidebar",
@@ -752,7 +758,9 @@ app.layout = html.Div(
 clientside_callback(
     """
     function(nClicks, currentTheme) {
-        const nextTheme = nClicks && nClicks % 2 === 1 ? "dark" : "light";
+        const storedTheme = currentTheme === "dark" ? "dark" : "light";
+        // No clicks yet means this is a page load: keep whatever the store restored.
+        const nextTheme = !nClicks ? storedTheme : (storedTheme === "dark" ? "light" : "dark");
         const isDark = nextTheme === "dark";
         const label = isDark ? "Light mode" : "Dark mode";
         const title = isDark ? "Switch to light mode" : "Switch to dark mode";
@@ -936,8 +944,9 @@ def update_dashboard(year: int | str, crime_type: str, community_area: int, metr
     annual_fig = themed_layout(annual_fig, theme)
     annual_fig = compact_overview_figure(annual_fig, "annual")
 
-    heatmap_fig = compact_overview_figure(heatmap_figure(year, crime_type, community_area, theme), "heatmap")
-    day_hour_key = heatmap_color_key(year, crime_type, community_area, heatmap_low, heatmap_high)
+    heat_data = filtered_heatmap_data(year, crime_type, community_area)
+    heatmap_fig = compact_overview_figure(heatmap_figure(heat_data, theme), "heatmap")
+    day_hour_key = heatmap_color_key(heat_data, heatmap_low, heatmap_high)
 
     return kpis_for_selection(year, crime_type, community_area), trend_fig, bar_fig, color_key, map_fig, heatmap_fig, day_hour_key, annual_fig
 
@@ -962,22 +971,38 @@ def update_trend_analytics(year: int | str, crime_type: str, theme: str, trend_r
 
 
 @app.callback(
+    Output("geo-selection", "data"),
+    Input("geo-map", "clickData"),
+    Input("area-filter", "value"),
+    State("geo-selection", "data"),
+    prevent_initial_call=True,
+)
+def update_geo_selection(click_data: dict | None, community_area: int, current_selection: int) -> int:
+    """Resolve map clicks and the dropdown into one selection the user can always clear."""
+    dropdown_area = int(community_area or 0)
+    if ctx.triggered_id == "area-filter" or dropdown_area:
+        return dropdown_area
+    clicked = area_from_click(click_data)
+    # Clicking the already-selected area clears it, so a click is never a one-way door.
+    return 0 if clicked == int(current_selection or 0) else clicked
+
+
+@app.callback(
     Output("geo-map", "figure"),
     Output("geo-ranked", "figure"),
     Output("geo-area-trend", "figure"),
     Output("geo-profile", "children"),
     Input("year-filter", "value"),
     Input("crime-filter", "value"),
-    Input("area-filter", "value"),
+    Input("geo-selection", "data"),
     Input("metric-filter", "value"),
-    Input("geo-map", "clickData"),
     Input("theme-store", "data"),
 )
-def update_geospatial(year: int | str, crime_type: str, community_area: int, metric: str, click_data: dict | None, theme: str):
+def update_geospatial(year: int | str, crime_type: str, selected_area: int, metric: str, theme: str):
     primary = "#7bd0ff" if theme == "dark" else "#00668a"
     accent = "#ffb960" if theme == "dark" else "#f1a02b"
     map_style = "carto-darkmatter" if theme == "dark" else "carto-positron"
-    selected_area = selected_area_from_click(click_data, community_area)
+    selected_area = int(selected_area or 0)
     area_data = aggregate_area_data(year, crime_type)
 
     geo_map = px.choropleth_map(
