@@ -642,7 +642,7 @@ app.layout = html.Div(
                                                 card("Spatial Density: Community Areas", "Community-area choropleth from Chicago Data Portal boundaries", "community-map", "map-panel dense-panel overview-map-panel"),
                                                 card(
                                                     "Ranked Categories & Arrest Rates",
-                                                    "Top reported categories by volume; color shows arrest rate",
+                                                    "Top categories by volume; color = arrest rate",
                                                     "category-bars",
                                                     "wide-panel dense-panel overview-ranked-panel",
                                                     header_extra=html.Div(id="category-color-key", className="category-color-key"),
@@ -655,7 +655,7 @@ app.layout = html.Div(
                                                 card("Monthly Reported Incidents", "Selected crime type across the active analysis window", "monthly-trend", "trend-panel dense-panel"),
                                                 card(
                                                     "Day and Hour Pattern",
-                                                    "Reported incidents by weekday and 4-hour time band",
+                                                    "By weekday and 4-hour time band",
                                                     "day-hour-heatmap",
                                                     "heatmap-panel dense-panel",
                                                     header_extra=html.Div(id="day-hour-color-key", className="day-hour-color-key color-key"),
