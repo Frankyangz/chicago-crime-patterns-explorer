@@ -204,7 +204,10 @@ def prepare_heatmap(area_lookup: pd.DataFrame) -> pd.DataFrame:
         ["year", "primary_type", "community_area", "community_name", "day", "day_order", "hour_band", "hour_band_start", "incidents"]
     ].sort_values(["year", "community_area", "primary_type", "day_order", "hour_band_start"])
 
-    banded.to_csv(DATA_PROCESSED / "day_hour_heatmap.csv", index=False)
+    # Gzipped: this table is the largest output by far and compresses roughly
+    # 12x, which keeps the deployed function bundle small. pandas reads it back
+    # transparently from the .gz extension.
+    banded.to_csv(DATA_PROCESSED / "day_hour_heatmap.csv.gz", index=False)
     return banded
 
 def prepare_kpi_summary(community_counts: pd.DataFrame) -> None:

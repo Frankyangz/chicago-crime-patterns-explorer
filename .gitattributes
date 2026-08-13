@@ -4,5 +4,6 @@
 
 # Large generated assets: skip diffing and line-ending conversion.
 *.geojson binary
+*.gz binary
 *.png binary
 *.pdf binary

@@ -25,7 +25,7 @@ METRIC_LABELS = {item["value"]: item["label"] for item in METRICS}
 
 monthly = pd.read_csv(DATA_SHARED / "monthly_crime_counts.csv", parse_dates=["month"])
 community_counts = pd.read_csv(DATA_SHARED / "community_area_yearly_counts.csv")
-heatmap = pd.read_csv(DATA_PROCESSED / "day_hour_heatmap.csv")
+heatmap = pd.read_csv(DATA_PROCESSED / "day_hour_heatmap.csv.gz")
 with (DATA_SHARED / "community_area_boundaries.geojson").open("r", encoding="utf-8") as file:
     community_geojson = json.load(file)
 

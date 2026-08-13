@@ -1,3 +1,5 @@
-dash>=2.18
-pandas>=2.2
-plotly>=5.22
+# Pinned rather than floored: the deployed function bundle sits close to the
+# platform size limit, so an unattended major-version bump could break the build.
+dash==4.1.0
+pandas==2.3.3
+plotly==6.7.0

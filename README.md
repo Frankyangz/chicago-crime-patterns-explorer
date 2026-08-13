@@ -2,6 +2,8 @@
 
 An interactive Dash dashboard for exploring 1.2 million reported Chicago crime incidents from 2021 through 2025 — across time, category, and all 77 community areas.
 
+**Live demo: [chicago-crime-explorer.vercel.app](https://chicago-crime-explorer.vercel.app)**
+
 ![Overview dashboard](docs/images/overview-light.png)
 
 ## What the Data Shows
@@ -52,7 +54,7 @@ cd dashboard
 python app.py
 ```
 
-Open `http://127.0.0.1:8050/`. The app runs locally; it is not deployed to a public server.
+Open `http://127.0.0.1:8050/`.
 
 To re-fetch and rebuild every data file from the Chicago Data Portal:
 
@@ -68,12 +70,24 @@ Python · Dash · Plotly · pandas · HTML/CSS · Chicago Data Portal public dat
 
 ```text
 dashboard/         Dash app, callbacks, and UI assets
+api/               Vercel entry point exposing the Dash Flask server
 data/raw/          Source extracts used by the preparation pipeline
 data/shared/       Dashboard-ready lookup, boundary, and count files
 data/processed/    Processed summaries used by charts and KPIs
 docs/              Methodology notes and screenshots
 src/               Data preparation script
 ```
+
+## Deployment
+
+The dashboard is hosted on Vercel as a single Python function. `api/index.py`
+exposes the Dash app's underlying Flask server, and `vercel.json` routes every
+path to it so that Dash owns its own routing and callback endpoints. Pushing to
+`main` redeploys.
+
+The day/hour table is stored gzipped (`day_hour_heatmap.csv.gz`, ~0.85 MB
+against 10.7 MB uncompressed) to keep the function bundle well inside the
+platform's size limit; pandas reads it directly, so nothing else changes.
 
 ## Data Sources
 

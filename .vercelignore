@@ -1,0 +1,10 @@
+# Kept out of the deployed function bundle. These are repository documentation
+# and pipeline inputs; the running dashboard never reads them.
+docs/
+src/
+data/raw/
+*.pdf
+LICENSE
+README.md
+__pycache__/
+.venv/
