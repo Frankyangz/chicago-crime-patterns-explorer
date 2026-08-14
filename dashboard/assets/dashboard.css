@@ -650,6 +650,23 @@ input:focus-visible,
   border-top: 1px solid var(--outline-variant);
 }
 
+.sidebar-byline {
+  padding-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.sidebar-byline a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.sidebar-byline a:hover {
+  text-decoration: underline;
+}
+
 .sidebar-actions .theme-toggle,
 .sidebar-actions .primary-button {
   width: 100%;

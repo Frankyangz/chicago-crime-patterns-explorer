@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_SHARED = ROOT / "data" / "shared"
 DATA_PROCESSED = ROOT / "data" / "processed"
 GITHUB_REPO_URL = "https://github.com/Frankyangz/chicago-crime-patterns-explorer"
+AUTHOR_LINKEDIN_URL = "https://linkedin.com/in/franklinzhang88"
 
 YEARS = [2021, 2022, 2023, 2024, 2025]
 YEAR_OPTIONS = [{"label": "All Years", "value": "all"}] + [{"label": str(year), "value": year} for year in YEARS]
@@ -58,7 +59,32 @@ HOUR_BAND_LABELS = {
     "20-24": "8 PM-12 AM",
 }
 
-app = Dash(__name__, title="Chicago Crime Patterns Explorer")
+SITE_URL = "https://chicago-crime-explorer.vercel.app"
+SITE_DESCRIPTION = (
+    "An interactive dashboard over 1.2 million reported Chicago crime incidents, "
+    "2021-2025, across time, category, and all 77 community areas."
+)
+
+app = Dash(
+    __name__,
+    title="Chicago Crime Patterns Explorer",
+    meta_tags=[
+        # Without this, phones render the page at desktop width and scale it
+        # down, so none of the responsive breakpoints in dashboard.css apply.
+        {"name": "viewport", "content": "width=device-width, initial-scale=1"},
+        {"name": "description", "content": SITE_DESCRIPTION},
+        # Link previews wherever the URL gets shared.
+        {"property": "og:type", "content": "website"},
+        {"property": "og:title", "content": "Chicago Crime Patterns Explorer"},
+        {"property": "og:description", "content": SITE_DESCRIPTION},
+        {"property": "og:url", "content": SITE_URL},
+        {"property": "og:image", "content": f"{SITE_URL}/assets/og-preview.png"},
+        {"name": "twitter:card", "content": "summary_large_image"},
+        {"name": "twitter:title", "content": "Chicago Crime Patterns Explorer"},
+        {"name": "twitter:description", "content": SITE_DESCRIPTION},
+        {"name": "twitter:image", "content": f"{SITE_URL}/assets/og-preview.png"},
+    ],
+)
 server = app.server
 
 
@@ -603,6 +629,18 @@ app.layout = html.Div(
                             **{"aria-label": "Switch to dark mode"},
                         ),
                         html.Button([material_icon("download"), html.Span("Export CSV")], id="export-button", className="primary-button", type="button"),
+                    ],
+                ),
+                html.Div(
+                    className="sidebar-byline",
+                    children=[
+                        html.Span("Built by "),
+                        html.A(
+                            "Yang \"Franklin\" Zhang",
+                            href=AUTHOR_LINKEDIN_URL,
+                            target="_blank",
+                            rel="noopener noreferrer",
+                        ),
                     ],
                 ),
             ],
