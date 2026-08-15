@@ -59,6 +59,106 @@ HOUR_BAND_LABELS = {
     "20-24": "8 PM-12 AM",
 }
 
+AUSTIN_COMMUNITY_AREA = 25
+
+
+def citywide_rows() -> pd.DataFrame:
+    """Per-area, per-category rows. The frame carries no citywide aggregate —
+    "All Community Areas" is an option the layout adds, not a row — so a
+    citywide figure means summing the areas, minus the per-area "All Types"
+    rows that would otherwise count every incident twice.
+    """
+    return community_counts[community_counts["primary_type"] != "All Types"]
+
+
+def citywide_category_totals() -> pd.DataFrame:
+    totals = citywide_rows().groupby("primary_type", as_index=False)[["incidents", "arrests"]].sum()
+    totals["arrest_rate"] = 100 * totals["arrests"] / totals["incidents"]
+    return totals.sort_values("incidents", ascending=False, ignore_index=True)
+
+
+def citywide_annual_totals() -> pd.DataFrame:
+    annual = citywide_rows().groupby("year", as_index=False)[["incidents", "arrests"]].sum()
+    annual["arrest_rate"] = 100 * annual["arrests"] / annual["incidents"]
+    return annual.sort_values("year", ignore_index=True)
+
+
+DAY_FULL_NAMES = {
+    "Mon": "Monday",
+    "Tue": "Tuesday",
+    "Wed": "Wednesday",
+    "Thu": "Thursday",
+    "Fri": "Friday",
+    "Sat": "Saturday",
+    "Sun": "Sunday",
+}
+
+
+def peak_day_and_band(community_area: int) -> tuple[str, str]:
+    rows = heatmap[(heatmap["primary_type"] == "All Types") & (heatmap["community_area"] == community_area)]
+    grouped = rows.groupby(["day", "hour_band"], as_index=False)["incidents"].sum()
+    peak = grouped.loc[grouped["incidents"].idxmax()]
+    return DAY_FULL_NAMES[str(peak["day"])], HOUR_BAND_LABELS[str(peak["hour_band"])]
+
+
+def build_presets() -> dict[str, dict]:
+    """Three entry points that each set the filters and state one finding.
+
+    The sentences are derived from the same frames the charts read, so a data
+    refresh cannot leave a claim on screen that the charts no longer support.
+    """
+    categories = citywide_category_totals()
+    first, second = categories.iloc[0], categories.iloc[1]
+
+    city_day, city_band = peak_day_and_band(0)
+    austin_day, austin_band = peak_day_and_band(AUSTIN_COMMUNITY_AREA)
+    austin_name = str(
+        community_counts.loc[community_counts["community_area"] == AUSTIN_COMMUNITY_AREA, "community_name"].iloc[0]
+    )
+
+    annual = citywide_annual_totals()
+    peak_year = annual.loc[annual["incidents"].idxmax()]
+    final_year = annual.iloc[-1]
+    opening_year = annual.iloc[0]
+    decline = 100 * (peak_year["incidents"] - final_year["incidents"]) / peak_year["incidents"]
+
+    return {
+        "preset-volume": {
+            "label": "Volume isn't enforcement",
+            "filters": {"year": "all", "crime": "All Types", "area": 0, "metric": "incidents"},
+            "headline": "The biggest categories are not the most acted on.",
+            "detail": (
+                f"{first.primary_type} and {second.primary_type} are the two largest categories at "
+                f"{int(first.incidents):,} and {int(second.incidents):,} reported incidents — but "
+                f"{first.arrest_rate:.1f}% of {str(first.primary_type).lower()} reports end in arrest, "
+                f"against {second.arrest_rate:.1f}% for {str(second.primary_type).lower()}."
+            ),
+        },
+        "preset-area": {
+            "label": f"{austin_name} runs on a different clock",
+            "filters": {"year": "all", "crime": "All Types", "area": AUSTIN_COMMUNITY_AREA, "metric": "incidents"},
+            "headline": "A citywide average hides when an area is actually busy.",
+            "detail": (
+                f"Chicago as a whole peaks {city_day} {city_band}. {austin_name} peaks {austin_day} {austin_band} — "
+                "a different day and the opposite end of the clock, which is why every view here can be narrowed to a single area."
+            ),
+        },
+        "preset-turn": {
+            "label": f"The {int(peak_year.year)} turn",
+            "filters": {"year": "all", "crime": "All Types", "area": 0, "metric": "arrest_rate"},
+            "headline": "Volume and outcomes moved in opposite directions.",
+            "detail": (
+                f"Reported incidents peaked in {int(peak_year.year)} and fell {decline:.1f}% by {int(final_year.year)}, "
+                f"while the share ending in arrest climbed from {opening_year.arrest_rate:.1f}% in "
+                f"{int(opening_year.year)} to {final_year.arrest_rate:.1f}%."
+            ),
+        },
+    }
+
+
+PRESETS = build_presets()
+PRESET_KEYS = list(PRESETS)
+
 SITE_URL = "https://chicago-crime-explorer.vercel.app"
 SITE_DESCRIPTION = (
     "An interactive dashboard over 1.2 million reported Chicago crime incidents, "
@@ -666,6 +766,27 @@ app.layout = html.Div(
                 html.Main(
                     className="dashboard-main",
                     children=[
+                        html.Section(
+                            className="preset-row",
+                            children=[
+                                html.Div(
+                                    className="preset-controls",
+                                    children=[
+                                        html.Span("Start here", className="preset-label"),
+                                        *[
+                                            html.Button(
+                                                PRESETS[key]["label"],
+                                                id=key,
+                                                className="preset-button",
+                                                type="button",
+                                            )
+                                            for key in PRESET_KEYS
+                                        ],
+                                    ],
+                                ),
+                                html.Div(id="preset-takeaway", className="preset-takeaway"),
+                            ],
+                        ),
                         html.Div(
                             id="overview-view",
                             className="overview-dense-view",
@@ -826,14 +947,66 @@ clientside_callback(
     Input("nav-overview", "n_clicks"),
     Input("nav-geo", "n_clicks"),
     Input("nav-trends", "n_clicks"),
+    *[Input(key, "n_clicks") for key in PRESET_KEYS],
     prevent_initial_call=True,
 )
-def set_active_view(_overview_clicks: int | None, _geo_clicks: int | None, _trend_clicks: int | None) -> str:
+def set_active_view(*_clicks: int | None) -> str:
     if ctx.triggered_id == "nav-geo":
         return "geospatial"
     if ctx.triggered_id == "nav-trends":
         return "trends"
+    # A preset makes its case with the overview charts, so send the reader there.
     return "overview"
+
+
+@app.callback(
+    Output("year-filter", "value"),
+    Output("crime-filter", "value"),
+    Output("area-filter", "value"),
+    Output("metric-filter", "value"),
+    *[Input(key, "n_clicks") for key in PRESET_KEYS],
+    prevent_initial_call=True,
+)
+def apply_preset(*_clicks: int | None):
+    filters = PRESETS[ctx.triggered_id]["filters"]
+    return filters["year"], filters["crime"], filters["area"], filters["metric"]
+
+
+def matching_preset(year: int | str, crime_type: str, community_area: int, metric: str) -> str | None:
+    state = (year, crime_type, int(community_area), metric)
+    for key, preset in PRESETS.items():
+        filters = preset["filters"]
+        if state == (filters["year"], filters["crime"], filters["area"], filters["metric"]):
+            return key
+    return None
+
+
+@app.callback(
+    Output("preset-takeaway", "children"),
+    Output("preset-takeaway", "className"),
+    *[Output(key, "className") for key in PRESET_KEYS],
+    Input("year-filter", "value"),
+    Input("crime-filter", "value"),
+    Input("area-filter", "value"),
+    Input("metric-filter", "value"),
+)
+def render_preset_takeaway(year: int | str, crime_type: str, community_area: int, metric: str):
+    """Show a preset's claim only while the filters still produce it.
+
+    Driving this from the filters rather than from the click means a takeaway
+    cannot outlive the selection it describes: change any filter and the
+    sentence clears, instead of sitting above charts that no longer support it.
+    """
+    active = matching_preset(year, crime_type, community_area, metric)
+    button_classes = ["preset-button active" if key == active else "preset-button" for key in PRESET_KEYS]
+    if active is None:
+        return "", "preset-takeaway", *button_classes
+    preset = PRESETS[active]
+    children = [
+        html.Strong(preset["headline"], className="preset-takeaway-headline"),
+        html.Span(preset["detail"], className="preset-takeaway-detail"),
+    ]
+    return children, "preset-takeaway visible", *button_classes
 
 
 @app.callback(
