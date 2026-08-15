@@ -358,11 +358,12 @@ input:focus-visible,
 }
 .theme-dark .js-plotly-plot .plotly .modebar { filter: invert(1); }
 
+/* The shell, sidebar, topbar, and content-shell are restyled at the top
+   level further down (see "Rich sidebar refinement"), which outranks any
+   declaration made here — @media adds no specificity, so the later rule
+   wins at every width. Their responsive treatment therefore lives in the
+   max-width: 1100px block near the end of this file, after those rules. */
 @media (max-width: 1100px) {
-  .sidebar { position: static; width: 100%; height: auto; }
-  .app-shell { display: block; }
-  .content-shell { margin-left: 0; width: 100%; }
-  .topbar { position: static; height: auto; padding: 16px; align-items: flex-start; gap: 14px; flex-direction: column; }
   .topbar-actions { flex-wrap: wrap; }
   .filter-panel, .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .trend-panel, .map-panel, .wide-panel, .heatmap-panel, .annual-panel { grid-column: span 12; }
@@ -1093,6 +1094,13 @@ input:focus-visible,
 }
 
 @media (max-width: 1100px) {
+  /* Stack the sidebar above the content. Without this the shell keeps the
+     top-level display: flex and the two sit side by side, squeezing the
+     charts into a sliver of the viewport. */
+  .app-shell {
+    display: block;
+  }
+
   .sidebar {
     position: sticky;
     top: 0;
@@ -1155,6 +1163,13 @@ input:focus-visible,
   .sidebar-actions .theme-toggle,
   .sidebar-actions .primary-button {
     width: auto;
+  }
+
+  /* The sidebar is a two-column grid at this width; left to itself the
+     byline lands in a narrow cell and wraps onto three lines. */
+  .sidebar-byline {
+    grid-column: 1 / -1;
+    padding-top: 0;
   }
 
   .content-shell {
