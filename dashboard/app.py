@@ -766,31 +766,34 @@ app.layout = html.Div(
                 html.Main(
                     className="dashboard-main",
                     children=[
-                        html.Section(
-                            className="preset-row",
-                            children=[
-                                html.Div(
-                                    className="preset-controls",
-                                    children=[
-                                        html.Span("Start here", className="preset-label"),
-                                        *[
-                                            html.Button(
-                                                PRESETS[key]["label"],
-                                                id=key,
-                                                className="preset-button",
-                                                type="button",
-                                            )
-                                            for key in PRESET_KEYS
-                                        ],
-                                    ],
-                                ),
-                                html.Div(id="preset-takeaway", className="preset-takeaway"),
-                            ],
-                        ),
                         html.Div(
                             id="overview-view",
                             className="overview-dense-view",
                             children=[
+                                # Inside the overview container, so it is shown and hidden
+                                # with that view: the presets set overview filters and make
+                                # their case with overview charts.
+                                html.Section(
+                                    className="preset-row",
+                                    children=[
+                                        html.Div(
+                                            className="preset-controls",
+                                            children=[
+                                                html.Span("Start here", className="preset-label"),
+                                                *[
+                                                    html.Button(
+                                                        PRESETS[key]["label"],
+                                                        id=key,
+                                                        className="preset-button",
+                                                        type="button",
+                                                    )
+                                                    for key in PRESET_KEYS
+                                                ],
+                                            ],
+                                        ),
+                                        html.Div(id="preset-takeaway", className="preset-takeaway"),
+                                    ],
+                                ),
                                 html.Section(id="kpi-grid", className="kpi-grid overview-kpi-strip"),
                                 html.Section(
                                     className="overview-dense-grid overview-reference-layout",
@@ -947,15 +950,13 @@ clientside_callback(
     Input("nav-overview", "n_clicks"),
     Input("nav-geo", "n_clicks"),
     Input("nav-trends", "n_clicks"),
-    *[Input(key, "n_clicks") for key in PRESET_KEYS],
     prevent_initial_call=True,
 )
-def set_active_view(*_clicks: int | None) -> str:
+def set_active_view(_overview_clicks: int | None, _geo_clicks: int | None, _trend_clicks: int | None) -> str:
     if ctx.triggered_id == "nav-geo":
         return "geospatial"
     if ctx.triggered_id == "nav-trends":
         return "trends"
-    # A preset makes its case with the overview charts, so send the reader there.
     return "overview"
 
 

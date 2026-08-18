@@ -1322,7 +1322,6 @@ input:focus-visible,
 .preset-row {
   display: grid;
   gap: 10px;
-  margin-bottom: 18px;
 }
 
 .preset-controls {
