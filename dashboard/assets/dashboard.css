@@ -1010,10 +1010,56 @@ input:focus-visible,
   min-width: 0;
 }
 
-.profile-tip-icon {
+/* Instant on hover, and reachable by tap or keyboard: the native title
+   tooltip waited about a second and did nothing at all on touch. The bubble
+   opens downward and right-aligned so it stays inside the panel, which clips
+   its overflow. Being absolutely positioned, it costs no layout height and
+   leaves the one-screen budget alone. */
+.profile-tip-wrap {
+  position: relative;
+  display: inline-flex;
   flex: 0 0 auto;
+}
+
+.profile-tip-icon {
   color: var(--outline);
   cursor: help;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.profile-tip-wrap:hover .profile-tip-icon,
+.profile-tip-icon:focus-visible {
+  color: var(--primary);
+}
+
+.profile-tip-bubble {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 40;
+  width: max-content;
+  max-width: 250px;
+  padding: 8px 10px;
+  border: 1px solid var(--outline-variant);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 15px;
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 120ms ease;
+}
+
+.profile-tip-wrap:hover .profile-tip-bubble,
+.profile-tip-wrap:focus-within .profile-tip-bubble {
+  opacity: 1;
+  visibility: visible;
 }
 
 .geo-profile-compact .profile-tip-icon {

@@ -527,11 +527,31 @@ def area_profile_panel(area_data: pd.DataFrame, selected_area: int, metric: str,
                             # The tip rides in the header rather than sitting in the
                             # card body: this panel is height-constrained, and a
                             # three-line paragraph was the part being clipped.
-                            html.Span(
-                                "info",
-                                className="material-symbols-outlined profile-tip-icon",
-                                title=PROFILE_TIP,
-                                **{"aria-label": PROFILE_TIP, "role": "note"},
+                            html.Div(
+                                [
+                                    # A span carrying tabindex rather than a button: it
+                                    # takes focus on tap in mobile Safari, where a button
+                                    # often does not, and it sidesteps the global
+                                    # "button { font: inherit }" reset that would strip
+                                    # the icon font.
+                                    html.Span(
+                                        "info",
+                                        className="material-symbols-outlined profile-tip-icon",
+                                        tabIndex="0",
+                                        **{
+                                            "role": "button",
+                                            "aria-label": "How to use this panel",
+                                            "aria-describedby": "profile-tip-bubble",
+                                        },
+                                    ),
+                                    html.Div(
+                                        PROFILE_TIP,
+                                        id="profile-tip-bubble",
+                                        className="profile-tip-bubble",
+                                        **{"role": "tooltip"},
+                                    ),
+                                ],
+                                className="profile-tip-wrap",
                             ),
                         ],
                         className="profile-header-meta",
