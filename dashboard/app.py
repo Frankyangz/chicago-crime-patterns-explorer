@@ -484,6 +484,12 @@ def heatmap_figure(data: pd.DataFrame, theme: str) -> go.Figure:
     return themed_layout(fig, theme)
 
 
+PROFILE_TIP = (
+    "Filter for a fixed profile, or click the map when viewing All Community Areas. "
+    "Click the same area again to clear it."
+)
+
+
 def area_profile_panel(area_data: pd.DataFrame, selected_area: int, metric: str, year: int | str, crime_type: str) -> html.Section:
     if selected_area == 0:
         top = area_data.sort_values(metric, ascending=False).head(1)
@@ -512,10 +518,29 @@ def area_profile_panel(area_data: pd.DataFrame, selected_area: int, metric: str,
     return html.Section(
         className="panel geo-profile geo-profile-compact",
         children=[
-            html.Div([html.H3(title), html.P(detail)], className="panel-header profile-header"),
+            html.Div(
+                [
+                    html.H3(title),
+                    html.Div(
+                        [
+                            html.P(detail),
+                            # The tip rides in the header rather than sitting in the
+                            # card body: this panel is height-constrained, and a
+                            # three-line paragraph was the part being clipped.
+                            html.Span(
+                                "info",
+                                className="material-symbols-outlined profile-tip-icon",
+                                title=PROFILE_TIP,
+                                **{"aria-label": PROFILE_TIP, "role": "note"},
+                            ),
+                        ],
+                        className="profile-header-meta",
+                    ),
+                ],
+                className="panel-header profile-header",
+            ),
             html.P(context, className="profile-context"),
             html.Div(metrics, className="profile-stats"),
-            html.P("Tip: filter for a fixed profile, or click the map when viewing All Community Areas. Click the same area again to clear it.", className="profile-tip"),
         ],
     )
 

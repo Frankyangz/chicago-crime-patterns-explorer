@@ -913,14 +913,22 @@ input:focus-visible,
   grid-template-columns: minmax(620px, 1.72fr) minmax(360px, 0.78fr);
   gap: 14px;
   align-items: stretch;
-  height: clamp(560px, calc(100vh - 118px), 760px);
+  /* Everything on one screen: the subtrahend is the chrome around this grid —
+     topbar 94px, main padding 32px, footer 48px. It read 118px, which is less
+     than the chrome actually occupies, so the page overflowed the viewport and
+     the column painted over the footer. */
+  height: clamp(560px, calc(100vh - 174px), 760px);
   min-height: 0;
 }
 
 .geo-side-stack {
   min-height: 0;
   display: grid;
-  grid-template-rows: minmax(190px, 0.72fr) minmax(250px, 1.34fr) minmax(150px, 0.72fr);
+  /* Invariant: the row minimums plus the gaps must fit the grid's floor above.
+     175 + 230 + 125 + (2 x 14) = 558, inside 560. They previously summed to
+     618, so at short viewports the column was told to be smaller than it was
+     allowed to be, and the overflow landed on the footer. */
+  grid-template-rows: minmax(175px, 0.72fr) minmax(230px, 1.34fr) minmax(125px, 0.72fr);
   gap: 14px;
 }
 
@@ -995,13 +1003,22 @@ input:focus-visible,
   line-height: 19px;
 }
 
-.geo-profile-compact .profile-tip {
-  margin: auto 0 0;
-  padding-top: 5px;
-  border-top: 1px solid color-mix(in srgb, var(--outline-variant) 58%, transparent);
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 13px;
+.profile-header-meta {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.profile-tip-icon {
+  flex: 0 0 auto;
+  color: var(--outline);
+  cursor: help;
+}
+
+.geo-profile-compact .profile-tip-icon {
+  font-size: 16px;
+  line-height: 16px;
 }
 
 .geo-profile-compact .profile-note {
