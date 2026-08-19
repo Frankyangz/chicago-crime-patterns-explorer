@@ -19,6 +19,7 @@ All figures are reported incidents from Chicago public data, not a measure of al
 
 ## Features
 
+- **Start-here presets** — three entry points that set the filters and state, in a sentence, the finding those filters produce, so the overview opens on a claim rather than an empty selection. The sentences are derived from the same tables the charts read, so a data refresh cannot strand a stale figure on screen.
 - **Citywide KPIs** — total incidents, arrest rate, most frequent category, and highest-volume community area, all responding to the active filters.
 - **Community-area choropleth** with three selectable metrics: incident count, arrest rate, and incidents per 100k residents.
 - **Ranked categories** encoding volume and arrest rate simultaneously.
